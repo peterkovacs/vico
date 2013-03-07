@@ -300,11 +300,6 @@ DEBUG_FINALIZE();
 	if ([self project] != nil) {
 		[self setBaseURL:[[self project] initialURL]];
 		[explorer openExplorerTemporarily:NO];
-		/* This makes repeated open requests for the same URL always open a new window.
-		 * With this commented, the "project" is already opened, and no new window will be created.
-		 */
-		[[self project] close];
-		_project = nil;
 	}
 
 	[self updateJumplistNavigator];
@@ -470,6 +465,11 @@ DEBUG_FINALIZE();
 	/* Update symbol table. */
 	[symbolController filterSymbols];
 	[document addObserver:symbolController forKeyPath:@"symbols" options:0 context:NULL];
+}
+
+- (NSTabView *)tabView
+{
+	return tabView;
 }
 
 /* Create a new document tab.
@@ -888,6 +888,7 @@ DEBUG_FINALIZE();
 		return;
 	}
 
+	[[self project] close];
 	[self closeAllViews];
 	[[self window] close];
 }
@@ -945,8 +946,8 @@ DEBUG_FINALIZE();
 	if (__currentWindowController == self) {
 		__currentWindowController = nil;
 	}
+
 	DEBUG(@"will close %@", self);
-	[[self project] close];
 	MEMDEBUG(@"remaining window controllers: %@", __windowControllers);
 	MEMDEBUG(@"remaining tabs: %@", [tabBar representedTabViewItems]);
 
@@ -1587,7 +1588,6 @@ DEBUG_FINALIZE();
 		/*
 		 * Special case: if there are no tabs open, just create a new tab for
 		 * the document, regardless of positioning.
-		 * XXX: when can this happen?
 		 */
 		return [self createTabForDocument:doc];
 	} else if ([tabView numberOfTabViewItems] == 1 && [[tabController views] count] == 0) {
@@ -2486,7 +2486,6 @@ additionalEffectiveRectOfDividerAtIndex:(NSInteger)dividerIndex
 					    [[_documents anyObject] fileURL] == nil &&
 					    ![[_documents anyObject] isDocumentEdited]) {
 						/* Just change project directory. */
-						[doc close];
 						[self setBaseURL:url];
 						[self ex_pwd:command];
 						[explorer browseURL:url andDisplay:NO];
