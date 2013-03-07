@@ -410,7 +410,7 @@ OBJCFLAGS =
 ARCHS = $(ARCH)
 else
 CFLAGS = -Os -DNDEBUG
-ARCHS = i386 x86_64
+ARCHS = x86_64
 endif
 
 CFLAGS += -fvisibility=hidden -gdwarf-2
@@ -668,7 +668,7 @@ checkout:
 	@if test -d $(RELEASE_DIR); then echo "release directory already exists"; exit 1; fi
 	@echo checking out sources for '$(RELEASE_TAG)'
 	git clone . $(RELEASE_DIR)
-	cd $(RELEASE_DIR) && git co $(RELEASE_TAG)
+	cd $(RELEASE_DIR) && git checkout $(RELEASE_TAG)
 
 release: checkout
 	$(MAKE) -C $(RELEASE_DIR) appcast

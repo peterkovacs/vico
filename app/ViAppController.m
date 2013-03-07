@@ -301,7 +301,7 @@ updateMeta(void)
 	    [NSNumber numberWithBool:YES], @"antialias",
 	    [NSNumber numberWithBool:YES], @"prefertabs",
 	    [NSNumber numberWithBool:NO], @"cursorline",
-	    [NSNumber numberWithBool:NO], @"gdefault",
+	    [NSNumber numberWithBool:YES], @"gdefault",
 	    [NSNumber numberWithBool:YES], @"wrapscan",
 	    [NSNumber numberWithBool:NO], @"clipboard",
 	    [NSNumber numberWithBool:YES], @"matchparen",

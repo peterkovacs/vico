@@ -1417,7 +1417,7 @@ didCompleteLayoutForTextContainer:(NSTextContainer *)aTextContainer
 
 - (void)setLanguage:(ViLanguage *)lang
 {
-	if ([_textStorage lineCount] > 10000) {
+	if ([_textStorage lineCount] > 20000) {
 		[self message:@"Disabling syntax highlighting for large document."];
 		if (_language) {
 			[[ViEventManager defaultManager] emit:ViEventWillChangeSyntax for:self with:self, [NSNull null], nil];
