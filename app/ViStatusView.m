@@ -229,7 +229,7 @@
 	NSView *parentView = [_control superview];
 	NSUInteger resizingMask = NSViewHeightSizable,
 	           xPosition = 0;
-	if (_alignment == ViStatusComponentAlignCenter) {
+	if ([self.alignment isEqualToString:ViStatusComponentAlignCenter]) {
 		resizingMask |= NSViewMinXMargin | NSViewMaxXMargin;
 
 		// For center, we have to do math on all center aligned things
